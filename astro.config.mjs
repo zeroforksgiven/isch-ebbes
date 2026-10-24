@@ -5,39 +5,71 @@ import { defineConfig } from 'astro/config';
 
 import cloudflare from '@astrojs/cloudflare';
 
-const galleryDirectory = resolve('public', 'Galerie');
-const galleryModuleId = 'virtual:gallery-images';
-const resolvedGalleryModuleId = `\0${galleryModuleId}`;
+const publicContent = [
+  {
+    moduleId: 'virtual:gallery-images',
+    directory: resolve('public', 'Galerie'),
+    matches: (filename) => /\.(avif|gif|jpe?g|png|svg|webp)$/i.test(filename),
+    getData: (filename) => ({
+      src: `/Galerie/${encodeURIComponent(filename)}`,
+      title: filename.replace(/\.[^.]+$/, ''),
+    }),
+    sort: (first, second) => first.title.localeCompare(second.title, 'de'),
+  },
+  {
+    moduleId: 'virtual:flyer-files',
+    directory: resolve('public', 'Flyer'),
+    matches: () => true,
+    getData: (filename) => {
+      const title = filename.replace(/\.[^.]+$/, '');
+      const event = title.match(/^(\d{2})_(\d{2})_(\d{4})-(.+)$/);
+
+      return {
+        src: `/Flyer/${encodeURIComponent(filename)}`,
+        date: event ? `${event[1]}.${event[2]}.${event[3]}` : '',
+        location: event ? event[4].replaceAll('_', ' ') : title.replaceAll('_', '.'),
+        title: title.replaceAll('_', '.').replace(/-(?=.)/, ' - '),
+        sortDate: event ? `${event[3]}-${event[2]}-${event[1]}` : '',
+      };
+    },
+    sort: (first, second) =>
+      (first.sortDate || first.title).localeCompare(second.sortDate || second.title, 'de'),
+  },
+].map((content) => ({
+  ...content,
+  resolvedModuleId: `\0${content.moduleId}`,
+}));
 
 /** @type {import('vite').Plugin} */
-const galleryImagesPlugin = {
-  name: 'gallery-images',
+const publicContentPlugin = {
+  name: 'public-content',
   resolveId(id) {
-    if (id === galleryModuleId) return resolvedGalleryModuleId;
+    return publicContent.find((content) => content.moduleId === id)?.resolvedModuleId;
   },
   async load(id) {
-    if (id !== resolvedGalleryModuleId) return;
+    const content = publicContent.find((item) => item.resolvedModuleId === id);
+    if (!content) return;
 
-    const entries = await readdir(galleryDirectory, { withFileTypes: true });
-    const images = entries
-      .filter((entry) => entry.isFile() && /\.(avif|gif|jpe?g|png|svg|webp)$/i.test(entry.name))
-      .map((entry) => ({
-        src: `/Galerie/${encodeURIComponent(entry.name)}`,
-        title: entry.name.replace(/\.[^.]+$/, ''),
-      }))
-      .sort((first, second) => first.title.localeCompare(second.title, 'de'));
+    const entries = await readdir(content.directory, { withFileTypes: true });
+    const files = entries
+      .filter((entry) => entry.isFile() && content.matches(entry.name))
+      .map((entry) => content.getData(entry.name))
+      .sort(content.sort);
 
-    return `export default ${JSON.stringify(images)};`;
+    return `export default ${JSON.stringify(files)};`;
   },
   configureServer(server) {
-    server.watcher.add(galleryDirectory);
+    server.watcher.add(publicContent.map((content) => content.directory));
     server.watcher.on('all', (event, file) => {
       if (event !== 'add' && event !== 'unlink') return;
 
-      const relativePath = relative(galleryDirectory, file);
-      if (relativePath.startsWith('..') || isAbsolute(relativePath)) return;
+      const content = publicContent.find((item) => {
+        const relativePath = relative(item.directory, file);
+        return !relativePath.startsWith('..') && !isAbsolute(relativePath);
+      });
+      if (!content) return;
 
-      const module = server.moduleGraph.getModuleById(resolvedGalleryModuleId);
+      const module = server.moduleGraph.getModuleById(content.resolvedModuleId);
       if (module) server.moduleGraph.invalidateModule(module);
       server.ws.send({ type: 'full-reload' });
     });
@@ -48,6 +80,6 @@ const galleryImagesPlugin = {
 export default defineConfig({
   adapter: cloudflare(),
   vite: {
-    plugins: [galleryImagesPlugin],
+    plugins: [publicContentPlugin],
   },
 });

@@ -1,5 +1,6 @@
 ---
 import galleryImages from "virtual:gallery-images";
+import flyerFiles from "virtual:flyer-files";
 
 export const prerender = true;
 ---
@@ -42,32 +43,28 @@ export const prerender = true;
         <div class="karte highlight">
           <h3>Unsere Konzerttermine</h3>
           <ul class="termine-list">
-            <li>
-              <a href="/Waibstadt_27_11_2026.jpg" class="termine-link">
-                <span>
-                <strong>21.11.2026</strong> – Obrigheim
-                </span>
-                <span class="termine-aktion">
-                  Flyer ansehen
-                  <svg aria-hidden="true" viewBox="0 0 24 24">
-                    <path d="M7 17 17 7M7 7h10v10" />
-                  </svg>
-                </span>
-              </a>
-            </li>
-            <li>
-              <a href="/Waibstadt_27_11_2026.jpg" class="termine-link">
-                <span>
-                <strong>27.11.2026</strong> – SG Waibstadt
-                </span>
-                <span class="termine-aktion">
-                  Flyer ansehen
-                  <svg aria-hidden="true" viewBox="0 0 24 24">
-                    <path d="M7 17 17 7M7 7h10v10" />
-                  </svg>
-                </span>
-              </a>
-            </li>
+            {flyerFiles.map((flyer) => (
+              <li>
+                <a href={flyer.src} class="termine-link">
+                  <span>
+                    {flyer.date ? (
+                      <>
+                        <strong>{flyer.date}</strong> – {flyer.location}
+                      </>
+                    ) : (
+                      flyer.title
+                    )}
+                  </span>
+                  <span class="termine-aktion">
+                    Flyer ansehen
+                    <svg aria-hidden="true" viewBox="0 0 24 24">
+                      <path d="M7 17 17 7M7 7h10v10" />
+                    </svg>
+                  </span>
+                </a>
+              </li>
+            ))}
+            {flyerFiles.length === 0 && <li>Aktuell sind keine Termine geplant.</li>}
           </ul>
           <p class="ticket-info">
             Weitere Details und alle Infos auf dem Flyer. Tickets: <a href="mailto:tickets@isch-ebbes.de">tickets@isch-ebbes.de</a>
