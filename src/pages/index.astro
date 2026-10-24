@@ -160,25 +160,56 @@ export const prerender = true;
         <p class="eyebrow">Mitmachen</p>
         <h2>Interesse?</h2>
         <p>
-          Wenn du mitmachen willst, schick uns einfach eine Nachricht auf Facebook.
+          Wenn du mitmachen willst, schick uns einfach eine Nachricht auf Facebook, Instagram oder per E-Mail.
           Dann klären wir alles Weitere direkt.
         </p>
         <div class="cta-box">
           <h3>Kontakt</h3>
-          <p>
+          <div class="contact-links" aria-label="Kontaktmöglichkeiten">
             <a
-              class="facebook-link"
+              class="contact-link"
               href="https://www.facebook.com/ischebbes/"
               target="_blank"
               rel="noreferrer"
-              title="Facebook"
+              aria-label="Isch ebbes? auf Facebook öffnen"
             >
-              <svg aria-hidden="true" viewBox="0 0 320 512">
-                <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06H297V6.26S260.43 0 225.36 0C152.77 0 105.08 44.38 105.08 124.72v70.62H24.92V288h80.16v224h98.34V288z" />
-              </svg>
-              Auf Facebook melden
+              <span class="contact-icon facebook-icon">
+                <svg aria-hidden="true" viewBox="0 0 320 512">
+                  <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06H297V6.26S260.43 0 225.36 0C152.77 0 105.08 44.38 105.08 124.72v70.62H24.92V288h80.16v224h98.34V288z" />
+                </svg>
+              </span>
+              <span>Facebook</span>
             </a>
-          </p>
+            <a
+              class="contact-link"
+              href="https://www.instagram.com/ischebbes/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Isch ebbes? auf Instagram öffnen"
+            >
+              <span class="contact-icon instagram-icon">
+                <svg aria-hidden="true" viewBox="0 0 24 24">
+                  <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle class="instagram-dot" cx="17.5" cy="6.8" r="1" />
+                </svg>
+              </span>
+              <span>Instagram</span>
+            </a>
+            <a
+              class="contact-link"
+              href="mailto:tickets@isch-ebbes.de"
+              aria-label="E-Mail an tickets@isch-ebbes.de senden"
+            >
+              <span class="contact-icon email-icon">
+                <svg aria-hidden="true" viewBox="0 0 24 24">
+                  <path d="M3 5.5h18v13H3z" />
+                  <path d="m4 7 8 6 8-6" />
+                </svg>
+              </span>
+              <span>E-Mail</span>
+            </a>
+          </div>
         </div>
       </section>
     </main>
@@ -589,34 +620,95 @@ export const prerender = true;
   .cta-box {
     margin-top: 24px;
     max-width: 760px;
+    border-top: 3px solid var(--accent);
   }
 
-  .cta-box ul {
-    margin: 16px 0 0;
-    padding-left: 20px;
+  .contact-links {
     display: grid;
-    gap: 8px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 20px;
   }
 
-  .cta-box a {
-    color: var(--accent-bright);
+  .contact-link {
+    display: flex;
+    min-height: 70px;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--ground);
+    color: var(--text-strong);
     font-weight: 700;
     text-decoration: none;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
   }
 
-  .cta-box .facebook-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
+  .contact-link:hover,
+  .contact-link:focus-visible {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    background: var(--panel-hover);
   }
 
-  .cta-box .facebook-link svg {
-    color: #1877f2;
+  .contact-link:focus-visible {
+    outline: 3px solid var(--accent-bright);
+    outline-offset: 3px;
   }
 
-  .cta-box a:hover,
-  .cta-box a:focus-visible {
-    text-decoration: underline;
+  .contact-icon {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    place-items: center;
+    border-radius: 6px;
+    color: #fff;
+  }
+
+  .facebook-icon {
+    background: #1877f2;
+  }
+
+  .instagram-icon {
+    background: linear-gradient(135deg, #f9ce34, #ee2a7b 55%, #6228d7);
+  }
+
+  .email-icon {
+    background: var(--accent);
+    color: var(--ink);
+  }
+
+  .contact-icon svg {
+    display: block;
+    width: 22px;
+    height: 22px;
+  }
+
+  .facebook-icon svg {
+    width: 14px;
+    height: 23px;
+    fill: currentColor;
+  }
+
+  .instagram-icon svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+  }
+
+  .instagram-icon .instagram-dot {
+    fill: currentColor;
+    stroke: none;
+  }
+
+  .email-icon svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
   }
 
   .termine-list {
@@ -858,6 +950,10 @@ export const prerender = true;
   @media (max-width: 800px) {
     .info-grid,
     .karten-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-links {
       grid-template-columns: 1fr;
     }
   }
