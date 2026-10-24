@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <rect x="2" y="2" width="60" height="60" rx="13" fill="#1b1b1b" />
+    <text
+        x="8"
+        y="45"
+        fill="#ccc7c1"
+        font-family="Georgia,serif"
+        font-size="35"
+        font-weight="700"
+    >ie</text>
+    <text
+        x="43"
+        y="29"
+        fill="#f5a15b"
+        font-family="Arial,sans-serif"
+        font-size="21"
+        font-weight="700"
+    >?</text>
+    <circle cx="48" cy="48" r="2" fill="#f5a15b" />
+</svg>

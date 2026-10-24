@@ -1,0 +1,891 @@
+---
+import galleryImages from "virtual:gallery-images";
+
+export const prerender = true;
+---
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta
+      name="description"
+      content="Isch ebbes! Unser Chor stellt sich vor."
+    />
+    <title>Isch ebbes! | Unser Chor</title>
+  </head>
+
+  <body>
+    <header>
+      <a href="/" aria-label="Zur Startseite">
+        <img
+          class="logo"
+          src="/logo.png"
+          alt="Isch ebbes! … schoin's!"
+          width="439"
+        />
+      </a>
+      <nav class="topnav" aria-label="Hauptnavigation">
+        <a href="#ueber-uns">Über uns</a>
+        <a href="#repertoire">Repertoire</a>
+        <a href="#galerie">Galerie</a>
+        <a href="#termine">Termine</a>
+        <a href="#mitmachen">Mitmachen</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="termine">
+        <p class="eyebrow">Live erleben</p>
+        <h2>Termine und Auftritte</h2>
+        <div class="karte highlight">
+          <h3>Unsere Konzerttermine</h3>
+          <ul class="termine-list">
+            <li>
+              <a href="/Waibstadt_27_11_2026.jpg" class="termine-link">
+                <span>
+                <strong>21.11.2026</strong> – Obrigheim
+                </span>
+                <span class="termine-aktion">
+                  Flyer ansehen
+                  <svg aria-hidden="true" viewBox="0 0 24 24">
+                    <path d="M7 17 17 7M7 7h10v10" />
+                  </svg>
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="/Waibstadt_27_11_2026.jpg" class="termine-link">
+                <span>
+                <strong>27.11.2026</strong> – SG Waibstadt
+                </span>
+                <span class="termine-aktion">
+                  Flyer ansehen
+                  <svg aria-hidden="true" viewBox="0 0 24 24">
+                    <path d="M7 17 17 7M7 7h10v10" />
+                  </svg>
+                </span>
+              </a>
+            </li>
+          </ul>
+          <p class="ticket-info">
+            Weitere Details und alle Infos auf dem Flyer. Tickets: <a href="mailto:tickets@isch-ebbes.de">tickets@isch-ebbes.de</a>
+          </p>
+        </div>
+      </section>
+
+      <section class="hero">
+        <p class="eyebrow">Willkommen bei Isch ebbes!</p>
+        <h1>Viele Stimmen.<br />Viel Biss.</h1>
+        <p class="intro">
+          Isch ebbes? ist die A-cappella-Vocal-Band des Männergesangvereins
+          Sängerkranz 1863 e.V. Waibstadt – humorvoll, schräg und mit einem Sound,
+          der im Raum sofort sitzt.
+        </p>
+      </section>
+
+      <section id="galerie">
+        <p class="eyebrow">Im Blick</p>
+        <h2>Stimmen, Stimmung, Moments.</h2>
+        <div class="gallery-slider" aria-label="Galerie der Band">
+          {galleryImages.map((image) => (
+            <figure class="gallery-item">
+              <button
+                class="gallery-trigger"
+                type="button"
+                aria-label={`Bild vergrößern: ${image.title}`}
+                data-src={image.src}
+                data-alt={image.title}
+                data-caption={image.title}
+              >
+                <img src={image.src} alt={image.title} loading="lazy" />
+              </button>
+              <figcaption>{image.title}</figcaption>
+            </figure>
+          ))}
+        </div>
+        <dialog class="gallery-lightbox" aria-label="Vergrößerte Galerieansicht">
+          <button class="lightbox-close" type="button" aria-label="Bild schließen" title="Schließen">
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path d="m6 6 12 12M18 6 6 18" />
+            </svg>
+          </button>
+          <figure>
+            <img alt="" />
+            <figcaption></figcaption>
+          </figure>
+        </dialog>
+      </section>
+
+      <section id="ueber-uns">
+        <p class="eyebrow">Das sind wir</p>
+        <h2>Humor, Stimmen und Live-Feeling.</h2>
+        <div class="info-grid">
+          <article>
+            <h3>Musikstil</h3>
+            <p>Humorvolle, schräge Songs mit Augenzwinkern und viel Biss.</p>
+          </article>
+          <article>
+            <h3>Besetzung</h3>
+            <p>Reine Männertruppe mit Unterstützung durch Diana Heringer.</p>
+          </article>
+          <article>
+            <h3>Leitung</h3>
+            <p>Eric Grunwald schreibt die Texte und setzt die Richtung.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="repertoire">
+        <p class="eyebrow">Unser Sound</p>
+        <h2>Schöön Obszöön.</h2>
+        <p>
+          Bekannte Melodien, neu getextet – mit Mundart, Schrägheit und Augenzwinkern.
+        </p>
+        <div class="karten-grid">
+          <div class="karte">
+            <h3>Stilrichtungen</h3>
+            <p>Humorvoll, schräg, mit Mundart und einem Gespür für den richtigen Moment.</p>
+          </div>
+          <div class="karte">
+            <h3>Auftritte</h3>
+            <p>Lokale Veranstaltungen, feste Auftritte und spontane Abende mit viel Stimmung.</p>
+          </div>
+          <div class="karte">
+            <h3>Besonderheit</h3>
+            <p>Ohne Notenblatt, mit viel Witz und einem Live-Feeling direkt im Raum.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="mitmachen">
+        <p class="eyebrow">Mitmachen</p>
+        <h2>Interesse?</h2>
+        <p>
+          Wenn du mitmachen willst, schick uns einfach eine Nachricht auf Facebook.
+          Dann klären wir alles Weitere direkt.
+        </p>
+        <div class="cta-box">
+          <h3>Kontakt</h3>
+          <p>
+            <a
+              class="facebook-link"
+              href="https://www.facebook.com/ischebbes/"
+              target="_blank"
+              rel="noreferrer"
+              title="Facebook"
+            >
+              <svg aria-hidden="true" viewBox="0 0 320 512">
+                <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06H297V6.26S260.43 0 225.36 0C152.77 0 105.08 44.38 105.08 124.72v70.62H24.92V288h80.16v224h98.34V288z" />
+              </svg>
+              Auf Facebook melden
+            </a>
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div>
+          <p class="footer-title">Isch ebbes?</p>
+          <p>A-cappella-Vocal-Band des Sängerkranz 1863 e.V. Waibstadt</p>
+        </div>
+
+        <div>
+          <p class="footer-label">Tickets</p>
+          <a
+            class="footer-email-link"
+            href="mailto:tickets@isch-ebbes.de"
+            aria-label="Tickets per E-Mail an tickets@isch-ebbes.de"
+            title="Tickets per E-Mail"
+          >
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path d="M3 5.5h18v13H3z" />
+              <path d="m4 7 8 6 8-6" />
+            </svg>
+          </a>
+        </div>
+
+        <div>
+          <p class="footer-label">Mehr</p>
+          <div class="social-links">
+            <a
+              class="facebook-link"
+              href="https://www.facebook.com/ischebbes/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Facebook, in neuem Tab öffnen"
+              title="Facebook"
+            >
+              <svg aria-hidden="true" viewBox="0 0 320 512">
+                <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06H297V6.26S260.43 0 225.36 0C152.77 0 105.08 44.38 105.08 124.72v70.62H24.92V288h80.16v224h98.34V288z" />
+              </svg>
+            </a>
+            <a
+              class="instagram-link"
+              href="https://www.instagram.com/ischebbes/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Instagram, in neuem Tab öffnen"
+              title="Instagram"
+            >
+              <svg aria-hidden="true" viewBox="0 0 24 24">
+                <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle class="instagram-dot" cx="17.5" cy="6.8" r="1" />
+              </svg>
+            </a>
+          </div>
+
+        </div>
+
+        <div>
+          <p class="footer-label">Rechtliches</p>
+          <div class="footer-legal-links">
+            <a href="/impressum">Impressum</a>
+            <a href="/datenschutz">Datenschutz</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<script>
+  const gallery = document.querySelector(".gallery-slider");
+  const lightbox = document.querySelector<HTMLDialogElement>(".gallery-lightbox");
+  const lightboxImage = lightbox?.querySelector<HTMLImageElement>("img");
+  const lightboxCaption = lightbox?.querySelector("figcaption");
+
+  gallery?.addEventListener("click", (event) => {
+    if (!(event.target instanceof Element)) return;
+
+    const trigger = event.target.closest<HTMLButtonElement>(".gallery-trigger");
+    if (!trigger || !lightbox || !lightboxImage || !lightboxCaption) return;
+
+    lightboxImage.src = trigger.dataset.src ?? "";
+    lightboxImage.alt = trigger.dataset.alt ?? "";
+    lightboxCaption.textContent = trigger.dataset.caption ?? "";
+    lightbox.showModal();
+  });
+
+  lightbox?.querySelector(".lightbox-close")?.addEventListener("click", () => {
+    lightbox.close();
+  });
+
+  lightbox?.addEventListener("click", (event) => {
+    if (event.target === lightbox) lightbox.close();
+  });
+</script>
+
+<style>
+  :global(*) {
+    box-sizing: border-box;
+  }
+
+  :global(:root) {
+    --ink: #000000;
+    --ground: #1b1b1b;
+    --panel: #272727;
+    --panel-hover: #343434;
+    --text: #aca59a;
+    --text-strong: #b8b2a7;
+    --accent: #f5a15b;
+    --accent-bright: #ffbf7d;
+    --line: #484848;
+  }
+
+  :global(body) {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    color: var(--text);
+    background: linear-gradient(180deg, var(--ground) 0%, #151515 100%);
+    line-height: 1.7;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  header {
+    padding: 24px 24px 8px;
+    background: var(--ink);
+    text-align: center;
+  }
+
+  .logo {
+    display: block;
+    width: min(100%, 340px);
+    height: auto;
+    margin: auto;
+  }
+
+  header a {
+    display: inline-block;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    cursor: pointer;
+  }
+
+  header a:hover,
+  header a:focus-visible {
+    transform: translateY(-1px);
+    opacity: 0.95;
+  }
+
+  .topnav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 18px;
+    margin-bottom: 28px;
+  }
+
+  .topnav a {
+    display: inline-block;
+    padding: 10px 16px;
+    border: 1px solid rgba(245, 161, 91, 0.7);
+    border-radius: 999px;
+    background: rgba(245, 161, 91, 0.12);
+    color: #ffbf7d;
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+    transition: all 0.2s ease;
+  }
+
+  .topnav a:hover,
+  .topnav a:focus-visible {
+    background: #f5a15b;
+    color: #1a120d;
+    border-color: #f5a15b;
+    box-shadow: 0 0 0 3px rgba(245, 161, 91, 0.2);
+  }
+
+  .hero {
+    margin-top: 0;
+  }
+
+  .gallery-slider {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(260px, 34%);
+    gap: 20px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scroll-snap-type: x proximity;
+  }
+
+  .gallery-item {
+    margin: 0;
+    background: linear-gradient(145deg, #303030, var(--panel));
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 12px 34px rgb(0 0 0 / 20%);
+    scroll-snap-align: start;
+  }
+
+  .gallery-item img {
+    display: block;
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+  }
+
+  .gallery-trigger {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: zoom-in;
+  }
+
+  .gallery-trigger:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: -3px;
+  }
+
+  .gallery-item figcaption {
+    padding: 14px 18px 18px;
+    font-weight: 700;
+    color: var(--text-strong);
+  }
+
+  .gallery-lightbox {
+    position: fixed;
+    width: min(96vw, 1200px);
+    max-width: none;
+    max-height: 94vh;
+    margin: auto;
+    padding: 56px 20px 20px;
+    overflow: auto;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--ink);
+    color: var(--text-strong);
+  }
+
+  .gallery-lightbox::backdrop {
+    background: rgb(0 0 0 / 88%);
+  }
+
+  .gallery-lightbox figure {
+    margin: 0;
+  }
+
+  .gallery-lightbox img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 82vh;
+    margin: 0 auto;
+    object-fit: contain;
+  }
+
+  .gallery-lightbox figcaption {
+    padding-top: 14px;
+    color: var(--text);
+    text-align: center;
+    font-weight: 700;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: grid;
+    width: 40px;
+    height: 40px;
+    place-items: center;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--panel);
+    color: var(--text-strong);
+    cursor: pointer;
+  }
+
+  .lightbox-close svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-width: 2;
+  }
+
+  section {
+    max-width: 1000px;
+    margin: auto;
+    padding: 56px 24px;
+  }
+
+  .hero {
+    max-width: none;
+    padding: 64px max(24px, calc((100% - 952px) / 2));
+    background: var(--ink);
+    color: var(--text-strong);
+  }
+
+  .hero .eyebrow {
+    color: var(--accent-bright);
+  }
+
+  .hero h1 {
+    max-width: 900px;
+    margin-top: 16px;
+  }
+
+  .hero .intro {
+    color: var(--text);
+    max-width: 680px;
+    font-size: 1.15rem;
+  }
+
+  main > section:not(.hero) {
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+
+  main > section:not(.hero) + section {
+    border-top: 1px solid var(--line);
+  }
+
+  .eyebrow {
+    color: var(--accent-bright);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    color: var(--text-strong);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    line-height: 1.1;
+    letter-spacing: 0;
+    margin: 20px 0;
+  }
+
+  h2 {
+    color: var(--text-strong);
+    font-family: Georgia, "Times New Roman", serif;
+    margin-top: 12px;
+    margin-bottom: 24px;
+    letter-spacing: 0;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    line-height: 1.2;
+  }
+
+  h3 {
+    color: var(--text-strong);
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 1.3rem;
+  }
+
+  section > p:not(.eyebrow) {
+    max-width: 680px;
+  }
+
+  .info-grid,
+  .karten-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    margin-top: 32px;
+  }
+
+  .info-grid article,
+  .karte,
+  .cta-box {
+    background: linear-gradient(145deg, #303030, var(--panel));
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 12px 34px rgb(0 0 0 / 20%);
+  }
+
+  .info-grid p,
+  .karte p,
+  .cta-box li {
+    color: var(--text);
+    margin: 0;
+  }
+
+  .karte {
+    border-left: 5px solid var(--accent);
+  }
+
+  .highlight {
+    max-width: 760px;
+  }
+
+  .cta-box {
+    margin-top: 24px;
+    max-width: 760px;
+  }
+
+  .cta-box ul {
+    margin: 16px 0 0;
+    padding-left: 20px;
+    display: grid;
+    gap: 8px;
+  }
+
+  .cta-box a {
+    color: var(--accent-bright);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .cta-box .facebook-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+  }
+
+  .cta-box .facebook-link svg {
+    color: #1877f2;
+  }
+
+  .cta-box a:hover,
+  .cta-box a:focus-visible {
+    text-decoration: underline;
+  }
+
+  .termine-list {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 18px;
+    display: grid;
+    gap: 12px;
+  }
+
+  .termine-list li {
+    padding: 0;
+    border-left: 4px solid var(--accent);
+    background: linear-gradient(145deg, #303030, var(--panel));
+    border-radius: 8px;
+    color: var(--text);
+    overflow: hidden;
+  }
+
+  .termine-link {
+    color: var(--accent-bright);
+    text-decoration: none;
+    display: flex;
+    min-height: 72px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .termine-link:hover,
+  .termine-link:focus-visible {
+    color: var(--accent-bright);
+    background: var(--panel-hover);
+  }
+
+  .termine-link:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: -3px;
+  }
+
+  .termine-aktion {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 8px;
+    padding: 0 14px;
+    border-radius: 4px;
+    background: var(--accent);
+    color: var(--ink);
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .termine-aktion svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+  }
+
+  .termine-link:hover .termine-aktion,
+  .termine-link:focus-visible .termine-aktion {
+    background: #e28a42;
+  }
+
+  .ticket-info {
+    margin-top: 18px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .ticket-info a {
+    color: var(--accent-bright);
+    text-decoration: none;
+  }
+
+  .ticket-info a:hover,
+  .ticket-info a:focus-visible {
+    text-decoration: underline;
+  }
+
+  .site-footer {
+    background: var(--ink);
+    color: var(--text);
+    padding: 28px 24px 36px;
+  }
+
+  .footer-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.5fr repeat(3, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+
+  .footer-legal-links {
+    display: grid;
+    justify-items: start;
+    gap: 4px;
+  }
+
+  .footer-title {
+    margin: 0 0 8px;
+    color: var(--text-strong);
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+
+  .footer-label {
+    margin: 0 0 8px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .site-footer p,
+  .site-footer a {
+    margin: 0;
+    color: var(--text);
+    text-decoration: none;
+    line-height: 1.8;
+  }
+
+  .site-footer .facebook-link {
+    display: inline-grid;
+    width: 40px;
+    height: 40px;
+    place-items: center;
+    border-radius: 4px;
+    background: #1877f2;
+    color: #fff;
+  }
+
+  .site-footer .footer-email-link {
+    display: inline-grid;
+    width: 40px;
+    height: 40px;
+    place-items: center;
+    border: 1px solid rgba(245, 161, 91, 0.7);
+    border-radius: 4px;
+    color: #ffbf7d;
+  }
+
+  .footer-email-link svg {
+    display: block;
+    width: 21px;
+    height: 21px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+  }
+
+  .site-footer .footer-email-link:hover,
+  .site-footer .footer-email-link:focus-visible {
+    background: #f5a15b;
+    color: #1a120d;
+  }
+
+  .footer-email-link:focus-visible {
+    outline: 3px solid #ffbf7d;
+    outline-offset: 3px;
+  }
+
+  .facebook-link svg {
+    display: block;
+    width: 14px;
+    height: 23px;
+    fill: currentColor;
+  }
+
+  .site-footer .facebook-link:hover,
+  .site-footer .facebook-link:focus-visible {
+    background: #0866ff;
+    color: #fff;
+  }
+
+  .facebook-link:focus-visible {
+    outline: 3px solid #ffbf7d;
+    outline-offset: 3px;
+  }
+
+  .social-links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .site-footer .instagram-link {
+    display: inline-grid;
+    width: 40px;
+    height: 40px;
+    place-items: center;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #f9ce34, #ee2a7b 55%, #6228d7);
+    color: #fff;
+  }
+
+  .instagram-link svg {
+    display: block;
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+  }
+
+  .instagram-link .instagram-dot {
+    fill: currentColor;
+    stroke: none;
+  }
+
+  .site-footer .instagram-link:hover,
+  .site-footer .instagram-link:focus-visible {
+    filter: brightness(1.12);
+  }
+
+  .instagram-link:focus-visible {
+    outline: 3px solid #ffbf7d;
+    outline-offset: 3px;
+  }
+
+  .site-footer a:hover,
+  .site-footer a:focus-visible {
+    color: #ffbf7d;
+  }
+
+  @media (max-width: 800px) {
+    .info-grid,
+    .karten-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .hero {
+      padding: 40px 24px;
+    }
+
+    main > section:not(.hero) {
+      padding-top: 44px;
+      padding-bottom: 44px;
+    }
+
+    .topnav {
+      gap: 10px 14px;
+    }
+
+    .termine-link {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .footer-inner {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
