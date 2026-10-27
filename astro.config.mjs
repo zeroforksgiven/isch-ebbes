@@ -1,5 +1,5 @@
 // @ts-check
-import { readdir } from 'node:fs/promises';
+import { readdir, stat } from 'node:fs/promises';
 import { isAbsolute, relative, resolve } from 'node:path';
 import { defineConfig } from 'astro/config';
 
@@ -10,11 +10,14 @@ const publicContent = [
     moduleId: 'virtual:gallery-images',
     directory: resolve('public', 'Galerie'),
     matches: (filename) => /\.(avif|gif|jpe?g|png|svg|webp)$/i.test(filename),
+    sortByModifiedDate: true,
     getData: (filename) => ({
       src: `/Galerie/${encodeURIComponent(filename)}`,
       title: filename.replace(/\.[^.]+$/, ''),
     }),
-    sort: (first, second) => first.title.localeCompare(second.title, 'de'),
+    sort: (first, second) =>
+      second.modifiedAt - first.modifiedAt ||
+      first.title.localeCompare(second.title, 'de'),
   },
   {
     moduleId: 'virtual:flyer-files',
@@ -51,10 +54,18 @@ const publicContentPlugin = {
     if (!content) return;
 
     const entries = await readdir(content.directory, { withFileTypes: true });
-    const files = entries
-      .filter((entry) => entry.isFile() && content.matches(entry.name))
-      .map((entry) => content.getData(entry.name))
-      .sort(content.sort);
+    const files = await Promise.all(
+      entries
+        .filter((entry) => entry.isFile() && content.matches(entry.name))
+        .map(async (entry) => {
+          const data = content.getData(entry.name);
+          if (!content.sortByModifiedDate) return data;
+
+          const { mtimeMs } = await stat(resolve(content.directory, entry.name));
+          return { ...data, modifiedAt: mtimeMs };
+        }),
+    );
+    files.sort(content.sort);
 
     return `export default ${JSON.stringify(files)};`;
   },
