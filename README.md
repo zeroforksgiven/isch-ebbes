@@ -1,63 +1,47 @@
-# Astro Starter Kit: Basics
+# Isch ebbes! Website
+
+Die Website ist mit Astro erstellt und wird als Cloudflare Worker veröffentlicht.
+
+## Lokal entwickeln und bauen
+
+Voraussetzung ist Node.js `>=22.22.0`.
 
 ```sh
-npm create astro@latest -- --template basics
+npm ci
+npm run dev
+npm run build
+npm run preview
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+`npm run preview` baut die Website und startet anschließend eine lokale Wrangler-Vorschau. `npm run deploy` baut und veröffentlicht den Worker.
 
-## 🚀 Project Structure
+## Deployment
 
-Inside of your Astro project, you'll see the following folders and files:
+Der GitHub-Workflow in `.github/workflows/deploy.yml` veröffentlicht die Website bei jedem Push auf `main`. Er kann auch manuell über **Actions → Build and deploy → Run workflow** gestartet werden.
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+Im GitHub-Repository müssen dafür diese Actions-Secrets hinterlegt sein:
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+- `CLOUDFLARE_API_TOKEN`: API-Token mit Berechtigung zum Veröffentlichen des Workers.
+- `CLOUDFLARE_ACCOUNT_ID`: ID des Cloudflare-Accounts.
 
-## 🧞 Commands
+## Bilder und Termine pflegen
 
-All commands are run from the root of the project, from a terminal:
+### Galerie
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+Galeriebilder in `public/Galerie` ablegen. Unterstützt werden AVIF, GIF, JPEG, PNG, SVG und WebP. Für die automatische Sortierung das Jahr am Anfang des Dateinamens angeben, zum Beispiel `2023-Chorfoto.jpg` oder `2023 - Chorfoto.jpg`.
 
-## 👀 Want to learn more?
+Bilder des aktuellen Jahres erscheinen unter „Aktuelle Einblicke“. Ältere Bilder erscheinen in der seitlich scrollbarbaren „Historie“, absteigend nach Jahr sortiert und ohne Jahres- oder Dateinamenanzeige. Bilder ohne Jahresangabe bleiben bei den aktuellen Einblicken.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+### Akteure
 
-## Automatisches Deployment über GitHub
+Porträts in `public/Akteure` ablegen. Unterstützte Bilder werden alphabetisch nach Dateiname sortiert und ohne Namensbeschriftung angezeigt.
 
-Der Workflow in `.github/workflows/deploy.yml` baut und veröffentlicht die Website automatisch bei jedem Push auf den Branch `main`. Er kann außerdem in GitHub unter **Actions → Build and deploy → Run workflow** manuell gestartet werden.
+### Termine
 
-Einmalige Einrichtung im GitHub-Repository:
+Flyer in `public/Flyer` ablegen. Für Datum und Ort das Format `TT_MM_JJJJ-Ort.ext` verwenden, zum Beispiel `27_11_2026-Waibstadt.jpg`. Vergangene Termine werden beim Seitenaufruf anhand der Zeitzone Europe/Berlin ausgeblendet.
 
-1. Unter **Settings → Secrets and variables → Actions** zwei Repository-Secrets anlegen:
-   - `CLOUDFLARE_API_TOKEN`: Cloudflare API-Token mit Berechtigung zum Veröffentlichen von Workers.
-   - `CLOUDFLARE_ACCOUNT_ID`: ID des Cloudflare-Accounts, in dem der Worker `isch-ebbes` veröffentlicht wird.
-2. Den Workflow und das Projekt in ein GitHub-Repository pushen. Der Deployment-Branch muss `main` heißen; falls der Standardbranch anders heißt, den Branch in der Workflow-Datei anpassen.
+Neue oder umbenannte Bilder und Flyer werden beim Build eingelesen. Nach Änderungen committen und nach `main` pushen; der GitHub-Workflow veröffentlicht sie dann automatisch.
 
-Neue Galeriebilder in `public/Galerie` hinzufügen und committen. Für die automatische Aufteilung das Jahr mit Bindestrich vor den Dateinamen setzen, zum Beispiel `2023-Chorfoto.jpg`; Leerzeichen um den Bindestrich sind ebenfalls erlaubt, etwa `2023 - Chorfoto.jpg`. Bilder aus dem aktuellen Jahr erscheinen in der Galerie; ältere Bilder werden beim Seitenaufruf ohne erneuten Build in „Historie“ angezeigt und intern nach Jahr sortiert. Bilder ohne Jahrespräfix bleiben in der aktuellen Galerie. Das Jahr und der Dateiname werden in der Historie nicht angezeigt.
+## Eigene Domain
 
-Neue Akteure-Bilder in `public/Akteure` hinzufügen und committen. Unterstützte Bilddateien werden automatisch alphabetisch nach Dateiname sortiert und auf der Startseite angezeigt.
-
-Neue Flyer in `public/Flyer` ablegen. Dateinamen im Format `TT_MM_JJJJ-Ort.ext`, zum Beispiel `27_11_2026-Waibstadt.jpg`, werden als `27.11.2026 – Waibstadt` angezeigt und direkt mit dem Flyer verlinkt. Datierte Auftritte werden nach ihrem Datum in der Zeitzone Europe/Berlin beim Seitenaufruf im Browser ausgeblendet, sobald der Tag vergangen ist; dafür ist kein neuer Build erforderlich. Jeder reguläre Dateityp im Ordner wird als Termin übernommen. Nach dem Commit und Push nach `main` werden die Termine automatisch veröffentlicht.
+Der Worker heißt `isch-ebbes` und ist in `wrangler.jsonc` konfiguriert. Eine eigene Domain wird in Cloudflare unter **Workers & Pages → isch-ebbes → Settings → Domains & Routes → Add → Custom Domain** mit dem Worker verbunden. Die Domain kann weiterhin bei webgo registriert sein; für die Cloudflare-Zone müssen die DNS-Nameserver auf Cloudflare zeigen. Vor dem Nameserverwechsel vorhandene E-Mail-DNS-Einträge übernehmen.
