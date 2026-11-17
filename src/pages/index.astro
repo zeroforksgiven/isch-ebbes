@@ -1,5 +1,6 @@
 ---
 import galleryImages from "virtual:gallery-images";
+import actorImages from "virtual:actor-images";
 import flyerFiles from "virtual:flyer-files";
 
 export const prerender = true;
@@ -12,7 +13,7 @@ export const prerender = true;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta
       name="description"
-      content="Isch ebbes! Unser Chor stellt sich vor."
+      content="Isch ebbes! Der A-cappella-Chor aus Waibstadt: bekannte Melodien, neue Mundarttexte und freche Themen."
     />
     <title>Isch ebbes! | Unser Chor</title>
   </head>
@@ -31,6 +32,8 @@ export const prerender = true;
         <a href="#ueber-uns">Über uns</a>
         <a href="#repertoire">Repertoire</a>
         <a href="#galerie">Galerie</a>
+        <a class="history-nav" href="#historie" hidden>Historie</a>
+        <a href="#akteure">Akteure</a>
         <a href="#termine">Termine</a>
         <a href="#mitmachen">Mitmachen</a>
       </nav>
@@ -44,7 +47,7 @@ export const prerender = true;
           <h3>Unsere Konzerttermine</h3>
           <ul class="termine-list">
             {flyerFiles.map((flyer) => (
-              <li>
+              <li data-event-date={flyer.sortDate}>
                 <a href={flyer.src} class="termine-link">
                   <span>
                     {flyer.date ? (
@@ -64,10 +67,12 @@ export const prerender = true;
                 </a>
               </li>
             ))}
-            {flyerFiles.length === 0 && <li>Aktuell sind keine Termine geplant.</li>}
+            <li class="termine-empty" hidden={flyerFiles.length > 0}>
+              Aktuell sind keine Termine geplant.
+            </li>
           </ul>
           <p class="ticket-info">
-            Weitere Details und alle Infos auf dem Flyer. Tickets: <a href="mailto:tickets@isch-ebbes.de">tickets@isch-ebbes.de</a>
+            Alle Infos stehen auf dem Flyer. Tickets gibt's unter <a href="mailto:tickets@isch-ebbes.de">tickets@isch-ebbes.de</a>.
           </p>
         </div>
       </section>
@@ -76,18 +81,18 @@ export const prerender = true;
         <p class="eyebrow">Willkommen bei Isch ebbes!</p>
         <h1>Viele Stimmen.<br />Viel Biss.</h1>
         <p class="intro">
-          Isch ebbes? ist die A-cappella-Vocal-Band des Männergesangvereins
-          Sängerkranz 1863 e.V. Waibstadt – humorvoll, schräg und mit einem Sound,
-          der im Raum sofort sitzt.
+          Isch ebbes? ist der A-cappella-Chor des Männergesangvereins
+          Sängerkranz 1863 e.V. Waibstadt. Stimmlich ganz oben, textlich gern mal
+          unter der Gürtellinie.
         </p>
       </section>
 
       <section id="galerie">
-        <p class="eyebrow">Im Blick</p>
-        <h2>Stimmen, Stimmung, Moments.</h2>
-        <div class="gallery-slider" aria-label="Galerie der Band">
+        <p class="eyebrow">Galerie</p>
+        <h2>Aktuelle Einblicke</h2>
+        <div class="gallery-slider" aria-label="Galerie des Chors">
           {galleryImages.map((image) => (
-            <figure class="gallery-item">
+            <figure class="gallery-item" data-photo-year={image.year || undefined}>
               <button
                 class="gallery-trigger"
                 type="button"
@@ -102,6 +107,7 @@ export const prerender = true;
             </figure>
           ))}
         </div>
+        <p class="gallery-empty" hidden>Aktuell gibt es keine neuen Bilder.</p>
         <dialog class="gallery-lightbox" aria-label="Vergrößerte Galerieansicht">
           <button class="lightbox-close" type="button" aria-label="Bild schließen" title="Schließen">
             <svg aria-hidden="true" viewBox="0 0 24 24">
@@ -117,42 +123,65 @@ export const prerender = true;
 
       <section id="ueber-uns">
         <p class="eyebrow">Das sind wir</p>
-        <h2>Humor, Stimmen und Live-Feeling.</h2>
+        <h2>Starke Stimmen. Freche Texte.</h2>
         <div class="info-grid">
           <article>
             <h3>Musikstil</h3>
-            <p>Humorvolle, schräge Songs mit Augenzwinkern und viel Biss.</p>
+            <p>Klanglich anspruchsvoll – textlich nicht immer jugendfrei.</p>
           </article>
           <article>
             <h3>Besetzung</h3>
-            <p>Reine Männertruppe mit Unterstützung durch Diana Heringer.</p>
+            <p>Neun Männer und Diana Heringer – zehn Stimmen, ein eingespielter Chor.</p>
           </article>
           <article>
             <h3>Leitung</h3>
-            <p>Eric Grunwald schreibt die Texte und setzt die Richtung.</p>
+            <p>Eric Grunwald schreibt die Texte und gibt die Richtung vor. Das Navi darf trotzdem zu Hause bleiben.</p>
           </article>
         </div>
+      </section>
+
+      <section id="historie" hidden>
+        <p class="eyebrow">Ein Blick zurück</p>
+        <h2>Historie</h2>
+        <div class="history-gallery gallery-slider" aria-label="Historische Bilder"></div>
       </section>
 
       <section id="repertoire">
         <p class="eyebrow">Unser Sound</p>
         <h2>Schöön Obszöön.</h2>
-        <p>
-          Bekannte Melodien, neu getextet – mit Mundart, Schrägheit und Augenzwinkern.
-        </p>
         <div class="karten-grid">
           <div class="karte">
-            <h3>Stilrichtungen</h3>
-            <p>Humorvoll, schräg, mit Mundart und einem Gespür für den richtigen Moment.</p>
+            <h3>Texte und Mundart</h3>
+            <p>Bekannte Melodien, neue Texte auf Mundart – mal romantisch, mal derb und selten ganz brav.</p>
           </div>
           <div class="karte">
             <h3>Auftritte</h3>
-            <p>Lokale Veranstaltungen, feste Auftritte und spontane Abende mit viel Stimmung.</p>
+            <p>Chorgesang mit Unterhaltung, überraschenden Momenten und jeder Menge Persönlichkeit.</p>
           </div>
           <div class="karte">
             <h3>Besonderheit</h3>
-            <p>Ohne Notenblatt, mit viel Witz und einem Live-Feeling direkt im Raum.</p>
+            <p>Wir nehmen den Gesang ernst. Uns selbst und unsere Texte nicht immer.</p>
           </div>
+        </div>
+      </section>
+
+      <section id="akteure">
+        <p class="eyebrow">Die Menschen dahinter</p>
+        <h2>Unsere Akteure.</h2>
+        <div class="gallery-slider" aria-label="Akteure von Isch ebbes">
+          {actorImages.map((image) => (
+            <figure class="gallery-item">
+              <button
+                class="gallery-trigger"
+                type="button"
+                aria-label="Porträt vergrößern"
+                data-src={image.src}
+                data-alt="Mitglied von Isch ebbes"
+              >
+                <img src={image.src} alt="Mitglied von Isch ebbes" loading="lazy" />
+              </button>
+            </figure>
+          ))}
         </div>
       </section>
 
@@ -160,8 +189,8 @@ export const prerender = true;
         <p class="eyebrow">Mitmachen</p>
         <h2>Interesse?</h2>
         <p>
-          Wenn du mitmachen willst, schick uns einfach eine Nachricht auf Facebook, Instagram oder per E-Mail.
-          Dann klären wir alles Weitere direkt.
+          Du willst mitsingen? Schreib uns auf Facebook, Instagram oder per E-Mail.
+          Eine Nachricht ist noch kein Vorsingen – versprochen.
         </p>
         <div class="cta-box">
           <h3>Kontakt</h3>
@@ -218,7 +247,7 @@ export const prerender = true;
       <div class="footer-inner">
         <div>
           <p class="footer-title">Isch ebbes?</p>
-          <p>A-cappella-Vocal-Band des Sängerkranz 1863 e.V. Waibstadt</p>
+          <p>A-cappella-Chor des Sängerkranz 1863 e.V. Waibstadt</p>
         </div>
 
         <div>
@@ -282,21 +311,86 @@ export const prerender = true;
 </html>
 
 <script>
-  const gallery = document.querySelector(".gallery-slider");
+  const today = new Intl.DateTimeFormat("sv-SE", {
+    timeZone: "Europe/Berlin",
+  }).format(new Date());
+  const termineList = document.querySelector(".termine-list");
+  if (termineList) {
+    const eventItems = termineList.querySelectorAll<HTMLLIElement>("[data-event-date]");
+    let hasVisibleEvents = false;
+
+    eventItems.forEach((item) => {
+      const eventDate = item.dataset.eventDate;
+      const isVisible = !eventDate || eventDate >= today;
+      item.hidden = !isVisible;
+      hasVisibleEvents ||= isVisible;
+    });
+
+    const emptyMessage = termineList.querySelector<HTMLLIElement>(".termine-empty");
+    if (emptyMessage) emptyMessage.hidden = hasVisibleEvents;
+  }
+
+  const currentGallery = document.querySelector<HTMLElement>("#galerie .gallery-slider");
+  const historySection = document.querySelector<HTMLElement>("#historie");
+  const historyGallery = historySection?.querySelector<HTMLElement>(".history-gallery");
+  const historyLink = document.querySelector<HTMLAnchorElement>(".history-nav");
+
+  if (currentGallery && historySection && historyGallery) {
+    const currentYear = today.slice(0, 4);
+    const historyImages = Array.from(
+      currentGallery.querySelectorAll<HTMLElement>("[data-photo-year]"),
+    )
+      .filter((item) => {
+        const year = item.dataset.photoYear ?? "";
+        return /^\d{4}$/.test(year) && year !== currentYear;
+      })
+      .sort(
+        (first, second) =>
+          Number(second.dataset.photoYear) - Number(first.dataset.photoYear),
+      );
+
+    if (historyImages.length > 0) {
+      historyImages.forEach((image) => {
+        image.querySelector("figcaption")?.remove();
+        const trigger = image.querySelector<HTMLButtonElement>(".gallery-trigger");
+        const photo = image.querySelector<HTMLImageElement>("img");
+
+        if (trigger) {
+          trigger.setAttribute("aria-label", "Historisches Bild vergrößern");
+          trigger.dataset.alt = "";
+          delete trigger.dataset.caption;
+        }
+        if (photo) photo.alt = "";
+
+        historyGallery.append(image);
+      });
+    }
+
+    const hasHistory = historyImages.length > 0;
+    historySection.hidden = !hasHistory;
+    if (historyLink) historyLink.hidden = !hasHistory;
+
+    const emptyGallery = document.querySelector<HTMLElement>("#galerie .gallery-empty");
+    if (emptyGallery) emptyGallery.hidden = currentGallery.children.length > 0;
+  }
+
+  const galleries = document.querySelectorAll(".gallery-slider");
   const lightbox = document.querySelector<HTMLDialogElement>(".gallery-lightbox");
   const lightboxImage = lightbox?.querySelector<HTMLImageElement>("img");
   const lightboxCaption = lightbox?.querySelector("figcaption");
 
-  gallery?.addEventListener("click", (event) => {
-    if (!(event.target instanceof Element)) return;
+  galleries.forEach((gallery) => {
+    gallery.addEventListener("click", (event) => {
+      if (!(event.target instanceof Element)) return;
 
-    const trigger = event.target.closest<HTMLButtonElement>(".gallery-trigger");
-    if (!trigger || !lightbox || !lightboxImage || !lightboxCaption) return;
+      const trigger = event.target.closest<HTMLButtonElement>(".gallery-trigger");
+      if (!trigger || !lightbox || !lightboxImage || !lightboxCaption) return;
 
-    lightboxImage.src = trigger.dataset.src ?? "";
-    lightboxImage.alt = trigger.dataset.alt ?? "";
-    lightboxCaption.textContent = trigger.dataset.caption ?? "";
-    lightbox.showModal();
+      lightboxImage.src = trigger.dataset.src ?? "";
+      lightboxImage.alt = trigger.dataset.alt ?? "";
+      lightboxCaption.textContent = trigger.dataset.caption ?? "";
+      lightbox.showModal();
+    });
   });
 
   lightbox?.querySelector(".lightbox-close")?.addEventListener("click", () => {
@@ -384,6 +478,10 @@ export const prerender = true;
     text-transform: uppercase;
     font-weight: 700;
     transition: all 0.2s ease;
+  }
+
+  .topnav a[hidden] {
+    display: none;
   }
 
   .topnav a:hover,

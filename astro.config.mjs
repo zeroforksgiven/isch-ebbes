@@ -11,13 +11,29 @@ const publicContent = [
     directory: resolve('public', 'Galerie'),
     matches: (filename) => /\.(avif|gif|jpe?g|png|svg|webp)$/i.test(filename),
     sortByModifiedDate: true,
-    getData: (filename) => ({
-      src: `/Galerie/${encodeURIComponent(filename)}`,
-      title: filename.replace(/\.[^.]+$/, ''),
-    }),
+    getData: (filename) => {
+      const datedFilename = filename.match(/^(\d{4})\s*-\s*(.+)$/);
+      const displayFilename = datedFilename?.[2].trim() ?? filename;
+
+      return {
+        src: `/Galerie/${encodeURIComponent(filename)}`,
+        title: displayFilename.replace(/\.[^.]+$/, ''),
+        year: datedFilename?.[1] ?? '',
+      };
+    },
     sort: (first, second) =>
       second.modifiedAt - first.modifiedAt ||
       first.title.localeCompare(second.title, 'de'),
+  },
+  {
+    moduleId: 'virtual:actor-images',
+    directory: resolve('public', 'Akteure'),
+    matches: (filename) => /\.(avif|gif|jpe?g|png|svg|webp)$/i.test(filename),
+    getData: (filename) => ({
+      src: `/Akteure/${encodeURIComponent(filename)}`,
+      title: filename.replace(/\.[^.]+$/, ''),
+    }),
+    sort: (first, second) => first.title.localeCompare(second.title, 'de'),
   },
   {
     moduleId: 'virtual:flyer-files',

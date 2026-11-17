@@ -56,6 +56,8 @@ Einmalige Einrichtung im GitHub-Repository:
    - `CLOUDFLARE_ACCOUNT_ID`: ID des Cloudflare-Accounts, in dem der Worker `isch-ebbes` veröffentlicht wird.
 2. Den Workflow und das Projekt in ein GitHub-Repository pushen. Der Deployment-Branch muss `main` heißen; falls der Standardbranch anders heißt, den Branch in der Workflow-Datei anpassen.
 
-Neue Galeriebilder in `public/Galerie` hinzufügen und committen. Nach dem Push nach `main` wird die Galerie automatisch neu gebaut und veröffentlicht. Die Bildtitel stammen aus den Dateinamen.
+Neue Galeriebilder in `public/Galerie` hinzufügen und committen. Für die automatische Aufteilung das Jahr mit Bindestrich vor den Dateinamen setzen, zum Beispiel `2023-Chorfoto.jpg`; Leerzeichen um den Bindestrich sind ebenfalls erlaubt, etwa `2023 - Chorfoto.jpg`. Bilder aus dem aktuellen Jahr erscheinen in der Galerie; ältere Bilder werden beim Seitenaufruf ohne erneuten Build in „Historie“ angezeigt und intern nach Jahr sortiert. Bilder ohne Jahrespräfix bleiben in der aktuellen Galerie. Das Jahr und der Dateiname werden in der Historie nicht angezeigt.
 
-Neue Flyer in `public/Flyer` ablegen. Dateinamen im Format `TT_MM_JJJJ-Ort.ext`, zum Beispiel `27_11_2026-Waibstadt.jpg`, werden als `27.11.2026 – Waibstadt` angezeigt und direkt mit dem Flyer verlinkt. Jeder reguläre Dateityp im Ordner wird als Termin übernommen. Nach dem Commit und Push nach `main` werden die Termine automatisch veröffentlicht.
+Neue Akteure-Bilder in `public/Akteure` hinzufügen und committen. Unterstützte Bilddateien werden automatisch alphabetisch nach Dateiname sortiert und auf der Startseite angezeigt.
+
+Neue Flyer in `public/Flyer` ablegen. Dateinamen im Format `TT_MM_JJJJ-Ort.ext`, zum Beispiel `27_11_2026-Waibstadt.jpg`, werden als `27.11.2026 – Waibstadt` angezeigt und direkt mit dem Flyer verlinkt. Datierte Auftritte werden nach ihrem Datum in der Zeitzone Europe/Berlin beim Seitenaufruf im Browser ausgeblendet, sobald der Tag vergangen ist; dafür ist kein neuer Build erforderlich. Jeder reguläre Dateityp im Ordner wird als Termin übernommen. Nach dem Commit und Push nach `main` werden die Termine automatisch veröffentlicht.
